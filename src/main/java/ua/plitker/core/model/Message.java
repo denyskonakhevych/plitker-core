@@ -12,23 +12,22 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 @Entity
 public class Message {
 
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
-	@NotEmpty
-	@Size(min = 1, max = 140, message = "The message cannot be longer than 140 characters.")
+	@NotNull
+	@Size(min = 1, max = 140, message = "The message cannot be empty or longer than 140 characters.")
 	private String text;
 	
+	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
 	private User author;
 	
 	@NotNull
-	private Date createdAt;
+	private Date creationDate;
 
 	public long getId() {
 		return id;
@@ -44,7 +43,7 @@ public class Message {
 
 	public void setText(String text) {
 		this.text = text;
-		this.createdAt = Calendar.getInstance().getTime();
+		this.creationDate = Calendar.getInstance().getTime();
 	}
 
 	public User getAuthor() {
@@ -55,12 +54,12 @@ public class Message {
 		this.author = author;
 	}
 
-	public Date getCreatedAt() {
-		return createdAt;
+	public Date getCreationDate() {
+		return creationDate;
 	}
 
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
+	public void setCreationDate(Date createdAt) {
+		this.creationDate = createdAt;
 	}
 	
 }
